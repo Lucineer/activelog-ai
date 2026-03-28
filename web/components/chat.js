@@ -248,12 +248,12 @@ export function Chat() {
     <div class="chat-area">
       <div class="chat-header">
         <button onclick=${() => sidebarOpen.value = !sidebarOpen.value}>☰</button>
-        <div class="chat-title">${activeSessionId ? '🏰 Adventure' : '🏰 DMlog.ai'}</div>
+        <div class="chat-title">${activeSessionId ? '🏃 Workout' : '🏃 ActiveLog.ai'}</div>
         <div class="actions">
           <button onclick=${() => setShowDice(!showDice)} title="Dice roller" class="icon-btn">🎲</button>
           <button onclick=${() => setDraftMode(!draftMode)} title="Compare responses" class="icon-btn">${draftMode ? '✕' : '🎯'}</button>
           <button onclick=${() => analyticsOpen.value = true} title="Analytics" class="icon-btn">📊</button>
-          <button onclick=${handleNewChat} title="New adventure" class="icon-btn">+ New</button>
+          <button onclick=${handleNewChat} title="New session" class="icon-btn">+ New</button>
           <button onclick=${() => theme.value = theme.value === 'dark' ? 'light' : 'dark'} class="icon-btn">${theme.value === 'dark' ? '☀️' : '🌙'}</button>
           <button onclick=${() => settingsOpen.value = true} class="icon-btn">⚙</button>
           <button onclick=${handleLogout} title="Sign out" class="icon-btn">🚪</button>
@@ -267,14 +267,14 @@ export function Chat() {
           ${loadingSession ? html`<div class="empty-state"><span class="spinner" style="font-size:1.5rem;width:24px;height:24px"></span><div class="empty-hint" style="margin-top:.75rem">Loading campaign...</div></div>` :
             messages.length === 0 ? html`
               <div class="empty-state">
-                <div class="empty-icon">🏰</div>
-                <div class="empty-title">Your adventure awaits.</div>
-                <div class="empty-hint">Describe what you want to do, or ask the DM to set the scene.</div>
+                <div class="empty-icon">🏃</div>
+                <div class="empty-title">Let's get moving.</div>
+                <div class="empty-hint">Log a workout, plan your training, or get fitness advice.</div>
                 <div class="empty-prompts">
-                  <button class="prompt-chip" onclick=${() => setInput('I walk into the nearest tavern')}>🚪 Walk into a tavern</button>
-                  <button class="prompt-chip" onclick=${() => setInput('I search for treasure in the ancient ruins')}>⛏️ Search for treasure</button>
-                  <button class="prompt-chip" onclick=${() => setInput('A dragon appears on the horizon!')}>🐉 Spot a dragon</button>
-                  <button class="prompt-chip" onclick=${() => setInput('Tell me about the world I am in')}>🗺️ Learn about this world</button>
+                  <button class="prompt-chip" onclick=${() => setInput('I just finished a 5k run in 28 minutes')}>💪 Log a workout</button>
+                  <button class="prompt-chip" onclick=${() => setInput('Create a training plan for my first 10k')}>🏃 Training plan</button>
+                  <button class="prompt-chip" onclick=${() => setInput('What should I eat after a strength workout?')}>🍎 Nutrition advice</button>
+                  <button class="prompt-chip" onclick=${() => setInput('Show me my progress this week')}>📊 Check progress</button>
                 </div>
               </div>
             ` :
@@ -285,7 +285,7 @@ export function Chat() {
               <div class="message-bubble">
                 <div class="typing-indicator">
                   <div class="typing-dots"><span></span><span></span><span></span></div>
-                  <span>DM is narrating...</span>
+                  <span>Analyzing...</span>
                 </div>
               </div>
             </div>
