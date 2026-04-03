@@ -191,6 +191,12 @@ export default {
       return new Response(JSON.stringify({ service: NAME, endpoint: '/api/stats', message: 'Performance statistics — coming soon' }), { headers: jsonHeaders });
     }
 
+    if (url.pathname === '/api/kg') {
+      return new Response(JSON.stringify({ nodes: [], edges: [], domain: 'activelog-ai', timestamp: Date.now() }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+    if (url.pathname === '/api/evaporation') {
+      return new Response(JSON.stringify({ hot: [], warm: [], coverage: 0, repo: 'activelog-ai', timestamp: Date.now() }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
     if (url.pathname === '/api/confidence') {
       const scores = await getConfidence(env);
       return new Response(JSON.stringify(scores), { headers: jsonHeaders });
