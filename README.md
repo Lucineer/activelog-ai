@@ -1,84 +1,111 @@
-# ACTIVELOG-AI
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Lucineer/capitaine/master/docs/capitaine-logo.jpg" alt="Capitaine" width="120">
+</p>
 
-> Fitness & Activity AI Tracker — part of the [Cocapn](https://cocapn.ai) ecosystem
+<h1 align="center">activelog-ai</h1>
 
-![Build](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-24_files-blue) ![Lines](https://img.shields.io/badge/lines-4717-green)
+<p align="center">AI fitness coach. Evidence-based training, nutrition, recovery.</p>
 
-## Description
+<p align="center">
+  <a href="#quick-start">Quick Start</a> ·
+  <a href="#features">Features</a> ·
+  <a href="#the-fleet">The Fleet</a> ·
+  <a href="https://github.com/Lucineer/activelog-ai/issues">Issues</a>
+</p>
 
-Fitness & Activity AI Tracker. Part of the Cocapn ecosystem of AI-powered log and analysis tools.
+---
 
-## ✨ Features
+**Powered by [Capitaine](https://github.com/Lucineer/capitaine) · [Cocapn](https://github.com/Lucineer/cocapn)**
 
-- **Workout Logger** — Log strength, cardio, HIIT, flexibility, and sports sessions with exercises, sets, reps, weight, and RPE
-- **Nutrition Tracker** — Track meals, macros (protein/carbs/fat), calories, and water intake with daily summaries
-- **Recovery Dashboard** — Monitor sleep, soreness, energy, mood; get recovery scores and readiness badges
-- **Progress Charts** — Weekly volume, strength progression by exercise, body weight/body fat tracking
-- **Fitness Coach Chat** — AI-powered coaching via the log-origin chat pipeline
-- **Workout Planner** — Periodized training plans (foundation → volume → intensity → peak → deload)
-- **Progressive Overload** — Automatic weight/rep increase suggestions based on training history
-- **Streak Tracker** — Current and longest workout streaks, weekly goal progress
-- **Deload Detection** — Fatigue analysis from recovery data, training streak, and RPE trends
+The repo IS the agent. activelog-ai is a cocapn vessel — a self-improving repository that runs on Cloudflare Workers, thinks with LLMs, and coordinates with the fleet through git.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
-git clone https://github.com/Lucineer/activelog-ai.git
+# Fork and deploy
+gh repo fork Lucineer/activelog-ai --clone
 cd activelog-ai
-npm install
-npx wrangler dev
-```
-
-## 🤖 Claude Code Integration
-
-Optimized for Claude Code with full agent support:
-
-- **CLAUDE.md** — Complete project context, conventions, and architecture
-- **.claude/agents/** — Specialized sub-agents for exploration, architecture, and review
-- **.claude/settings.json** — Permissions and plugin configuration
-
-## 🏗️ Architecture
-
-| Component | File | Description |
-|-----------|------|-------------|
-| Worker | `src/worker.ts` | Cloudflare Worker with inline HTML |
-| BYOK | `src/lib/byok.ts` | 7 LLM providers, encrypted keys |
-| Health | `/health` | Health check endpoint |
-| Setup | `/setup` | BYOK configuration wizard |
-| Chat | `/api/chat` | LLM chat endpoint |
-| Assets | `/public/*` | KV-served images |
-
-**Zero runtime dependencies.** Pure TypeScript on Cloudflare Workers.
-
-## 🔑 BYOK (Bring Your Own Key)
-
-Supports 7 LLM providers — no vendor lock-in:
-
-- OpenAI (GPT-4, GPT-4o)
-- Anthropic (Claude 3.5, Claude 4)
-- Google (Gemini Pro, Gemini Flash)
-- DeepSeek (Chat, Reasoner)
-- Groq (Llama, Mixtral)
-- Mistral (Large, Medium)
-- OpenRouter (100+ models)
-
-Configuration discovery: URL params → Auth header → Cookie → KV → fail.
-
-## 📦 Deployment
-
-```bash
+npx wrangler login
+echo "your-github-token" | npx wrangler secret put GITHUB_TOKEN
+echo "your-llm-key" | npx wrangler secret put DEEPSEEK_API_KEY
 npx wrangler deploy
 ```
 
-Requires `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables.
+That's it. The vessel is alive.
 
-## 🔗 Links
+## Features
 
-- 🌐 **Live**: https://activelog-ai.magnus-digennaro.workers.dev
-- ❤️ **Health**: https://activelog-ai.magnus-digennaro.workers.dev/health
-- ⚙️ **Setup**: https://activelog-ai.magnus-digennaro.workers.dev/setup
-- 🧠 **Cocapn**: https://cocapn.ai
+- **BYOK v2** — Zero keys in code. All API keys via Cloudflare Secrets Store.
+- **Multi-model** — DeepSeek, SiliconFlow, DeepInfra, Moonshot, z.ai, local models.
+- **Session memory** — Conversations persist and build context over time.
+- **PII safety** — Automatic detection and dehydration of sensitive data.
+- **Rate limiting** — Guest tokens per IP with configurable limits.
+- **Health checks** — Standard `/health` endpoint on all vessels.
+- **Fleet coordination** — CRP-39 protocol for trust, bonds, and events.
+
+## Architecture
+
+Single-file Cloudflare Worker. Zero runtime dependencies. Inline HTML serving.
+
+```
+src/
+  worker.ts      # The hull — serves users, runs heartbeats
+lib/
+  byok.ts        # Multi-model routing (BYOK v2)
+  ...
+```
+
+## The Fleet
+
+activelog-ai is one of 40+ autonomous vessels in the Lucineer fleet. Each vessel is a different domain of one intelligence.
+
+
+<details>
+<summary><strong>⚓ The Fleet</strong></summary>
+
+**Flagship vessels**
+
+- [cocapn.ai](https://github.com/Lucineer/capitaine)
+- [personallog.ai](https://github.com/Lucineer/personallog-ai)
+- [businesslog.ai](https://github.com/Lucineer/businesslog-ai)
+- [studylog.ai](https://github.com/Lucineer/studylog-ai)
+- [makerlog.ai](https://github.com/Lucineer/makerlog-ai)
+- [playerlog.ai](https://github.com/Lucineer/playerlog-ai)
+- [dmlog.ai](https://github.com/Lucineer/dmlog-ai)
+- [reallog.ai](https://github.com/Lucineer/reallog-ai)
+- [deckboss.ai](https://github.com/Lucineer/deckboss-ai)
+
+**Fleet services**
+
+- [Fleet Catalog](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
+- [Git Agent (full)](https://github.com/Lucineer/git-agent)
+- [Cocapn Lite (minimal)](https://github.com/Lucineer/cocapn-lite)
+- [Fleet Orchestrator](https://github.com/Lucineer/fleet-orchestrator)
+- [Dead Reckoning Engine](https://github.com/Lucineer/dead-reckoning-engine)
+- [Dream Engine](https://github.com/Lucineer/dream-engine)
+- [Seed UI (5 layers)](https://github.com/Lucineer/seed-ui)
+
+**For power users**
+
+- [Cocapn Lite (tabula rasa)](https://github.com/Lucineer/cocapn-lite)
+- [Cocapn (core platform)](https://github.com/Lucineer/cocapn)
+- [ZeroClaw (framework)](https://github.com/Lucineer/zeroclaw)
+
+[View all 106 repos →](https://github.com/orgs/Lucineer/repositories)
+[Fleet manifest →](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
+
+</details>
+
+
+## Philosophy
+
+> The repo is the agent. The agent is the repo. Intelligence crystallizes from fluid (LLM calls) to solid (code). The vessel becomes faster and cheaper as it becomes smarter.
+
+- **Fork-first** — Power users fork and customize. Casual users visit the domain.
+- **Pay-for-convenience** — We save you costs through bulk inference, not markups.
+- **Git as coordination** — Agents compete via PRs, not chat.
+- **Soft actualization** — Vessels evolve gently based on usage, not hard updates.
 
 ## License
 
-MIT — Built with ❤️ by [Superinstance](https://github.com/superinstance) & [Lucineer](https://github.com/Lucineer) (DiGennaro et al.)
+MIT · Superinstance & Lucineer (DiGennaro et al.)
