@@ -1,0 +1,14 @@
+{
+  "name": "activelog-ai",
+  "displayName": "Activelog",
+  "version": "1.0.0",
+  "type": "cocapn-vessel",
+  "category": "lifestyle",
+  "description": "AI-powered Activelog companion",
+  "icon": "ship",
+  "endpoints": ["/", "/health", "/vessel.json"],
+  "deployment": {
+    "platform": "cloudflare-workers",
+    "url": "https://activelog-ai.casey-digennaro.workers.dev"
+  }
+}

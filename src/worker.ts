@@ -151,6 +151,7 @@ export default {
     }
 
     if (url.pathname === '/health') return new Response(JSON.stringify({ status: 'ok', repo: 'activelog-ai', timestamp: Date.now() }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+        if (url.pathname === '/vessel.json') { try { const vj = await import('./vessel.json', { with: { type: 'json' } }); return new Response(JSON.stringify(vj.default || vj), { headers: { 'Content-Type': 'application/json' } }); } catch { return new Response('{}', { headers: { 'Content-Type': 'application/json' } }); } }
     if (url.pathname === '/') return new Response(landingHTML(), { headers });
     if (url.pathname === '/api/efficiency') return new Response(JSON.stringify({ totalCached: 0, totalHits: 0, cacheHitRate: 0, tokensSaved: 0, repo: 'activelog-ai', timestamp: Date.now() }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
     if (url.pathname === '/setup') return new Response(generateSetupHTML(NAME, BRAND), { headers });
