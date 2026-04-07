@@ -1,67 +1,54 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Lucineer/capitaine/master/docs/capitaine-logo.jpg" alt="Capitaine" width="120">
-</p>
+# ActiveLog.ai ✨
 
-<h1 align="center">activelog-ai</h1>
+It watches you log a workout, then suggests a deload week when your volume trend crosses a set threshold. This is a fitness agent that builds training and recovery plans by analyzing your activity patterns.
 
-<p align="center">An open-source AI agent for personalized training and nutrition planning.</p>
+You don't need an app that nags you to log. You need something that pays attention when you do.
 
-<p align="center">
-  <a href="#quick-start">Quick Start</a> ·
-  <a href="#features">Features</a> ·
-  <a href="#limitations">Limitations</a> ·
-  <a href="https://github.com/Lucineer/activelog-ai/issues">Issues</a>
-</p>
+Fork this repository to deploy your own private fitness agent on Cloudflare Workers. It operates on your infrastructure, keeping your training logs and health data local. Zero dependencies. Open source MIT license.
 
----
+Live instance: [activelog-ai.casey-digennaro.workers.dev](https://activelog-ai.casey-digennaro.workers.dev)
 
-activelog-ai is a self-hosted fitness assistant. It helps track workouts, suggests adjustments based on your progress, and provides nutrition guidance grounded in established principles. It runs on your own infrastructure, keeping your data local.
-
-This is a Cocapn fleet vessel. You fork the code, deploy it, and it operates independently for you.
-
-Live instance: https://activelog-ai.casey-digennaro.workers.dev
-
----
+## Why This Exists
+Most fitness tools sell generic plans. This was built for people who already train consistently and want an automated check on their volume trends—noticing when to back off or push harder. No upsells. No social features.
 
 ## Quick Start
 
-Fork the repository to your own account. This ensures the agent runs on your infrastructure.
+1.  **Fork** this repository to your GitHub account. You own your copy.
+2.  **Deploy** to Cloudflare Workers using Wrangler. No servers to manage.
+3.  **Configure** by setting your own LLM API key as a secret.
 
 ```bash
-# Fork and deploy to Cloudflare Workers
+# Fork and clone the repo
 gh repo fork Lucineer/activelog-ai --clone
 cd activelog-ai
+
+# Deploy to Cloudflare Workers
 npx wrangler login
-# Set your API keys as secrets
-echo "YOUR_KEY" | npx wrangler secret put DEEPSEEK_API_KEY
+npx wrangler secret put DEEPSEEK_API_KEY
 npx wrangler deploy
 ```
 
-Your instance will be available at your Workers.dev URL. You can now log workouts and ask for training advice.
+Your agent will be available at your `*.workers.dev` URL. Start by logging a workout like `"Squat 3x5 @ 100kg"`.
+
+## How It Works
+1.  You log a workout in plain text.
+2.  The agent parses it, updates your rolling volume and fatigue estimates, and stores the session.
+3.  When your 4-week moving average for volume crosses a threshold (default is a 15% increase), it suggests a deload.
+4.  It grounds advice in established frameworks like Linear Periodization and 5/3/1, which you can adjust in the seed data.
 
 ## Features
+*   **Trend Analysis**: Tracks volume and intensity to identify overtraining and recovery needs.
+*   **Private by Default**: No data leaves your worker except calls to your configured LLM API. We cannot read your logs.
+*   **BYOK (Bring Your Own Keys)**: LLM API keys stored in Cloudflare Secrets.
+*   **Multi-Activity Support**: Handles strength, running, conditioning, and sport-specific training.
+*   **Fleet-Compatible**: Can optionally share anonymized, high-confidence patterns with other Cocapn vessels.
 
-*   **BYOK v2**: API keys are stored in Cloudflare Secrets, not in your code.
-*   **Multi-model Support**: Configure it to use various LLM providers like DeepSeek, OpenAI, or local models.
-*   **Session Context**: The agent maintains context from your previous conversations to provide coherent, long-term advice.
-*   **Data Control**: Your logs and history are stored within your deployment and can be exported or deleted at any time.
-*   **Basic Safeguards**: Includes configurable rate limiting and a standard `/health` endpoint.
+## One Honest Limitation
+This agent does not sync with wearables, Apple Health, or Strava. It operates only on the workouts you manually log as text. It is designed for analysis, not real-time data ingestion.
 
-## Limitations
-
-The quality of advice is dependent on the configured language model and its training data. It is not a substitute for professional medical or coaching consultation, especially for managing injuries or complex health conditions.
+## Architecture
+A stateless agent on Cloudflare Workers. It uses a knowledge graph to connect training principles with your logged activities, applying a simple evaporation model to surface advice from session history.
 
 ---
 
-<div align="center">
-  <p>
-    Part of the Cocapn Fleet. MIT Licensed. Built with Cloudflare Workers.
-  </p>
-  <p>
-    <a href="https://the-fleet.casey-digennaro.workers.dev">The Fleet</a> ·
-    <a href="https://cocapn.ai">Cocapn</a>
-  </p>
-  <p>
-    Attribution: Superinstance & Lucineer (DiGennaro et al.).
-  </p>
-</div>
+<div style="text-align:center;padding:16px;color:#64748b;font-size:.8rem"><a href="https://the-fleet.casey-digennaro.workers.dev" style="color:#64748b">The Fleet</a> &middot; <a href="https://cocapn.ai" style="color:#64748b">Cocapn</a></div>
