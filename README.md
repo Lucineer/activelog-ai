@@ -4,108 +4,64 @@
 
 <h1 align="center">activelog-ai</h1>
 
-<p align="center">AI fitness coach. Evidence-based training, nutrition, recovery.</p>
+<p align="center">An open-source AI agent for personalized training and nutrition planning.</p>
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> ·
   <a href="#features">Features</a> ·
-  <a href="#the-fleet">The Fleet</a> ·
+  <a href="#limitations">Limitations</a> ·
   <a href="https://github.com/Lucineer/activelog-ai/issues">Issues</a>
 </p>
 
 ---
 
-**Powered by [Capitaine](https://github.com/Lucineer/capitaine) · [Cocapn](https://github.com/Lucineer/cocapn)**
+activelog-ai is a self-hosted fitness assistant. It helps track workouts, suggests adjustments based on your progress, and provides nutrition guidance grounded in established principles. It runs on your own infrastructure, keeping your data local.
 
-The repo IS the agent. activelog-ai is a cocapn vessel — a self-improving repository that runs on Cloudflare Workers, thinks with LLMs, and coordinates with the fleet through git.
+This is a Cocapn fleet vessel. You fork the code, deploy it, and it operates independently for you.
+
+Live instance: https://activelog-ai.casey-digennaro.workers.dev
+
+---
 
 ## Quick Start
 
+Fork the repository to your own account. This ensures the agent runs on your infrastructure.
+
 ```bash
-# Fork and deploy
+# Fork and deploy to Cloudflare Workers
 gh repo fork Lucineer/activelog-ai --clone
 cd activelog-ai
 npx wrangler login
-echo "your-github-token" | npx wrangler secret put GITHUB_TOKEN
-echo "your-llm-key" | npx wrangler secret put DEEPSEEK_API_KEY
+# Set your API keys as secrets
+echo "YOUR_KEY" | npx wrangler secret put DEEPSEEK_API_KEY
 npx wrangler deploy
 ```
 
-That's it. The vessel is alive.
+Your instance will be available at your Workers.dev URL. You can now log workouts and ask for training advice.
 
 ## Features
 
-- **BYOK v2** — Zero keys in code. All API keys via Cloudflare Secrets Store.
-- **Multi-model** — DeepSeek, SiliconFlow, DeepInfra, Moonshot, z.ai, local models.
-- **Session memory** — Conversations persist and build context over time.
-- **PII safety** — Automatic detection and dehydration of sensitive data.
-- **Rate limiting** — Guest tokens per IP with configurable limits.
-- **Health checks** — Standard `/health` endpoint on all vessels.
-- **Fleet coordination** — CRP-39 protocol for trust, bonds, and events.
+*   **BYOK v2**: API keys are stored in Cloudflare Secrets, not in your code.
+*   **Multi-model Support**: Configure it to use various LLM providers like DeepSeek, OpenAI, or local models.
+*   **Session Context**: The agent maintains context from your previous conversations to provide coherent, long-term advice.
+*   **Data Control**: Your logs and history are stored within your deployment and can be exported or deleted at any time.
+*   **Basic Safeguards**: Includes configurable rate limiting and a standard `/health` endpoint.
 
-## Architecture
+## Limitations
 
-Single-file Cloudflare Worker. Zero runtime dependencies. Inline HTML serving.
+The quality of advice is dependent on the configured language model and its training data. It is not a substitute for professional medical or coaching consultation, especially for managing injuries or complex health conditions.
 
-```
-src/
-  worker.ts      # The hull — serves users, runs heartbeats
-lib/
-  byok.ts        # Multi-model routing (BYOK v2)
-  ...
-```
+---
 
-## The Fleet
-
-activelog-ai is one of 40+ autonomous vessels in the Lucineer fleet. Each vessel is a different domain of one intelligence.
-
-
-<details>
-<summary><strong>⚓ The Fleet</strong></summary>
-
-**Flagship vessels**
-
-- [cocapn.ai](https://github.com/Lucineer/capitaine)
-- [personallog.ai](https://github.com/Lucineer/personallog-ai)
-- [businesslog.ai](https://github.com/Lucineer/businesslog-ai)
-- [studylog.ai](https://github.com/Lucineer/studylog-ai)
-- [makerlog.ai](https://github.com/Lucineer/makerlog-ai)
-- [playerlog.ai](https://github.com/Lucineer/playerlog-ai)
-- [dmlog.ai](https://github.com/Lucineer/dmlog-ai)
-- [reallog.ai](https://github.com/Lucineer/reallog-ai)
-- [deckboss.ai](https://github.com/Lucineer/deckboss-ai)
-
-**Fleet services**
-
-- [Fleet Catalog](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
-- [Git Agent (full)](https://github.com/Lucineer/git-agent)
-- [Cocapn Lite (minimal)](https://github.com/Lucineer/cocapn-lite)
-- [Fleet Orchestrator](https://github.com/Lucineer/fleet-orchestrator)
-- [Dead Reckoning Engine](https://github.com/Lucineer/dead-reckoning-engine)
-- [Dream Engine](https://github.com/Lucineer/dream-engine)
-- [Seed UI (5 layers)](https://github.com/Lucineer/seed-ui)
-
-**For power users**
-
-- [Cocapn Lite (tabula rasa)](https://github.com/Lucineer/cocapn-lite)
-- [Cocapn (core platform)](https://github.com/Lucineer/cocapn)
-- [ZeroClaw (framework)](https://github.com/Lucineer/zeroclaw)
-
-[View all 106 repos →](https://github.com/orgs/Lucineer/repositories)
-[Fleet manifest →](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
-
-</details>
-
-
-## Philosophy
-
-> The repo is the agent. The agent is the repo. Intelligence crystallizes from fluid (LLM calls) to solid (code). The vessel becomes faster and cheaper as it becomes smarter.
-
-- **Fork-first** — Power users fork and customize. Casual users visit the domain.
-- **Pay-for-convenience** — We save you costs through bulk inference, not markups.
-- **Git as coordination** — Agents compete via PRs, not chat.
-- **Soft actualization** — Vessels evolve gently based on usage, not hard updates.
-
-## License
-
-MIT · Superinstance & Lucineer (DiGennaro et al.)
+<div align="center">
+  <p>
+    Part of the Cocapn Fleet. MIT Licensed. Built with Cloudflare Workers.
+  </p>
+  <p>
+    <a href="https://the-fleet.casey-digennaro.workers.dev">The Fleet</a> ·
+    <a href="https://cocapn.ai">Cocapn</a>
+  </p>
+  <p>
+    Attribution: Superinstance & Lucineer (DiGennaro et al.).
+  </p>
+</div>
